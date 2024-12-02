@@ -18,24 +18,60 @@
       </div>
     </nav>
 
+<!-- 
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="https://vierp-test.s3.ap-south-1.amazonaws.com/logo/vit_logo.png" alt="Logo" class="sidebar-logo" />
+        <span class="sidebar-title">Admin Console</span>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#analytics">Analytics</a></li>
+        <li><a href="#settings">Settings</a></li>
+        <li><a href="#help">Help</a></li>
+      </ul>
+    </aside> -->
+
     <div class="query-engine">
       <div class="btn">
         <button @click="downloadCSV" class="query-cp">Download CSV</button>
         <button @click="downloadPDF" class="query-submit">Download PDF</button>
       </div>
-      <div class="results-container" v-if="results.length">
-        <v-data-table 
-          :headers="headers" 
-          :items="results" 
-          class="elevation-1 results-table"
-        >
-          <template v-slot:item="props">
-            <tr>
-              <td v-for="(value, key) in props.item" :key="key">{{ value }}</td>
-            </tr>
-          </template>
-        </v-data-table>
+
+      <div class="results-container">
+        <!-- Results Table -->
+        <div v-if="results.length && !error" class="results-table">
+          <v-data-table 
+            :headers="headers"
+            :items="results" 
+            class="elevation-1"
+          >
+            <template v-slot:item="props">
+              <tr>
+                <td v-for="(value, key) in props.item" :key="key">{{ value }}</td>
+              </tr>
+            </template>
+          </v-data-table>
+        </div>
+
+        <!-- Error Message -->
+        <div v-else-if="error" class="error-message">
+          <div class="placeholder">
+            <h2>An Error Occurred</h2>
+            <p>{{ error }}</p>
+          </div>
+        </div>
+
+        <!-- Placeholder for No Results -->
+        <div v-else class="no-results">
+          <div class="placeholder">
+            <h2>No Data Found</h2>
+            <p>Enter a query to fetch results!</p>
+          </div>
+        </div>
       </div>
+
+
 
       <div class="prom">
         <div class="prompt">
@@ -75,7 +111,8 @@ export default {
     return {
       query: '',
       results: [],
-      headers: []
+      headers: [],
+      error: null 
     };
   },
   methods: {
@@ -90,13 +127,9 @@ export default {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        if (data.length > 0) {
-          this.headers = Object.keys(data[0]).map(key => ({
-            text: key.charAt(0).toUpperCase() + key.slice(1),
-            value: key
-          }));
-          console.log(this.headers)
+        if (data.length > 0) {        
           this.results = data;
+          this.headers = data.headers;
         } else {
           this.headers = [];
           this.results = [];
@@ -104,6 +137,7 @@ export default {
       })
       .catch(error => {
         console.error('Error fetching results:', error);
+        this.error = 'Failed to fetch results. Please try again later.'
       });
     },
     downloadCSV() {
@@ -134,6 +168,71 @@ export default {
   /* Page Layout */
 
   <style scoped>
+
+  .error-message .placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  color: #d9534f; /* Red for errors */
+}
+
+.error-message .placeholder h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.error-message .placeholder p {
+  font-size: 1rem;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-logo {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  margin: 15px 0;
+}
+
+.sidebar-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.sidebar-menu a:hover {
+  text-decoration: underline;
+}
+
 /* Page Layout */
 .landing-page {
   display: flex;
@@ -178,16 +277,19 @@ export default {
 
 .Query{
   margin: 0 10px 0 0;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 
 }
 .qinp{
+  font-size: 20px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   flex: 1;
-  font-size: 16px;
+  font-family: sans-serif;
+  font-style: oblique;
+  /* font-size: 16px; */
 }
 .query-submit {
   padding: 10px 20px;
@@ -195,7 +297,7 @@ export default {
   background-color: #007bff;
   color: white;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   margin-left: 10px;
   transition: background-color 0.3s ease;
@@ -210,7 +312,7 @@ export default {
   background-color: #ffb700;
   color: rgb(0, 0, 0);
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   margin-left: 10px;
   transition: background-color 0.3s ease;

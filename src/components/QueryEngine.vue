@@ -46,6 +46,12 @@
           .then(response => response.json())
           .then(data => {
             this.results = data;
+            const keys = Object.keys(data);
+
+            console.log("this is key",keys)
+            // console.log(data);
+            
+            
           });
       },
       downloadCSV() {
