@@ -1,18 +1,13 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <AskVishAi />
   </div>
 </template>
 
 <script>
-import AskVishAi from './components/AskVishAi.vue';
 
 export default {
-  name: 'App',
-  components: {
-    AskVishAi,
-  },
+  name: "App",
 };
 </script>
 

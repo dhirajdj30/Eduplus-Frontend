@@ -9,7 +9,7 @@
       <div class="navbar-right">
         <div class="user-info">
           <img src="../assets/useer.svg" alt="User Profile" class="user-avatar" />
-          <span class="user-name">Admin Panel</span>
+          <span class="user-name">Faculty Dashboard</span>
           <span class="status active">Active</span>
         </div>
         <div class="user-dropdown">
@@ -65,7 +65,7 @@
         <!-- Placeholder for No Results -->
         <div v-else class="no-results">
           <div class="placeholder">
-            <h2>Welcome to Admin Query Engine</h2>
+            <h2>Welcome to Faculty Query Engine</h2>
             <p>Enter a query to fetch results!</p>
           </div>
         </div>
@@ -179,13 +179,13 @@ export default {
 
   <style scoped>
 
-.no-results .placeholder{
+  .no-results .placeholder{
     display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 50vh;
-  color: #0755ff;
+  color: #071cff;
   }
 
   .no-results .placeholder h2 {

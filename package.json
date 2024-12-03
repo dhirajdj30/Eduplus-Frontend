@@ -9,7 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.1",
+    "@fortawesome/free-solid-svg-icons": "^6.7.1",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@mdi/font": "^7.4.47",
+    "axios": "^1.7.8",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.3",
     "my-vue-app": "file:",

@@ -59,7 +59,11 @@ export default {
       // this.$emit('login', user);
       if(user.username == "admin"){
         this.$router.push('/admin');
-      }else{
+      }
+      else if(user.username == "teacher"){
+        this.$router.push('/teacher')
+      }
+      else{
         this.$router.push('/landing');
       }
     }

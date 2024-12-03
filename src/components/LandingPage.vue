@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-  
+      <ChatBot />
       <!-- Footer -->
       <footer class="footer">
         <span>Powered By EduPlus Campus</span>
@@ -59,8 +59,10 @@
   </template>
   
   <script>
+  import ChatBot from "../components/ChatBot.vue";
   export default {
     name: 'LandingPage',
+    components: {ChatBot,},
     data() {
       return {
         dropdownOpen: false,
@@ -86,10 +88,24 @@
       },
     },
   };
+
   </script>
   
   <style scoped>
   /* Page Layout */
+
+  .chatbot {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  width: 400px;
+  height: 600px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  overflow: hidden;
+}
   .landing-page {
     display: flex;
     flex-direction: column;
